@@ -70,6 +70,28 @@ public class Game {
                 if(!board.isEmptyField())
                     System.out.println("Draw!");
                 break;
+
+            case 2:
+                board.displayBoard();
+                while(board.isEmptyField()){
+                    if(turn == 1)
+                        turn = 2;
+                    else
+                        turn = 1;
+                    lastPlayer = getOtherPlayer(lastPlayer);
+                    AIMove();
+                    board.displayBoard();
+                    if(board.checkIfWin(lastPlayer, board)) {
+                        if(turn == 1)
+                            System.out.println("AI 1 Wins!");
+                        else
+                            System.out.println("AI 2 Wins!");
+                        break;
+                    }
+                }
+                if(!board.isEmptyField())
+                    System.out.println("Draw!");
+                break;
         }
     }
 
@@ -111,7 +133,9 @@ public class Game {
 
     public int minimax(int level, boolean isMax, char player, Board board) {
 //        board.displayBoard();
-        if(level == depth || !board.isEmptyField()){
+
+        if(level == depth || !board.isEmptyField() || board.checkIfWin(player, board)
+                || board.checkIfWin(getOtherPlayer(player), board)){
             return function.evalueStatus(board, player, turn);
         }
 
@@ -131,7 +155,7 @@ public class Game {
                     if(value >= maxScore) {
                         nextMoveLocation = i;
                     }
-                    System.out.println("Score for location "+i+" = "+value);
+//                    System.out.println("Score for location "+i+" = "+value);
                 }
                 maxScore = Math.max(value, maxScore);
             }
@@ -154,13 +178,6 @@ public class Game {
         }
     }
 
-    private char setPlayer(char lastPlayer){
-        if(lastPlayer == 'x')
-            lastPlayer = 'o';
-        else
-            lastPlayer = 'x';
-        return lastPlayer;
-    }
 
     private char getOtherPlayer(char player){
         if(player == 'x')

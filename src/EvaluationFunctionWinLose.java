@@ -32,7 +32,7 @@ public class EvaluationFunctionWinLose implements IEvaluationFunction {
             int firstEmpty = board.firstEmptyInCol(i);
             if(firstEmpty != -1){
                 if(board.fields[firstEmpty][i+1] == player)
-                    scores += 41;
+                    scores += 31;
             }
         }
 
@@ -40,7 +40,7 @@ public class EvaluationFunctionWinLose implements IEvaluationFunction {
             int firstEmpty = board.firstEmptyInCol(i);
             if(firstEmpty != -1){
                 if(board.fields[firstEmpty][i-1] == player)
-                    scores += 41;
+                    scores += 31;
             }
         }
 
