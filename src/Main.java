@@ -5,8 +5,7 @@ public class Main {
         int depth = 6;
 
 //        new Game(0);
-//        new Game(1, depth, new EvaluationFunctionWinLose());
-        new Game(2, depth, new EvaluationFunctionWinLose());
+        new Game(1, depth, new EvaluationFunctionWinLose());
 
 
 
