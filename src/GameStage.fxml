@@ -18,14 +18,14 @@
          <children>
             <VBox prefHeight="700.0" prefWidth="300.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scores">
                            <font>
                               <Font size="30.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="60.0" right="20.0" />
                            </HBox.margin>
                            <effect>
                               <DropShadow color="#c23232" />
@@ -65,10 +65,10 @@
                         <Font size="25.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
+                        <Insets bottom="15.0" left="20.0" />
                      </VBox.margin>
                   </Text>
-                  <RadioButton fx:id="radio1_button" accessibleRole="RADIO_MENU_ITEM" mnemonicParsing="false" selected="true" text="Human vs Human">
+                  <RadioButton fx:id="radio1_button" accessibleRole="RADIO_MENU_ITEM" mnemonicParsing="false" text="Human vs Human">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -89,28 +89,56 @@
                         <Font size="20.0" />
                      </font>
                      <padding>
-                        <Insets bottom="10.0" left="20.0" />
+                        <Insets left="20.0" />
                      </padding>
                   </RadioButton>
-                  <ComboBox fx:id="depth_combobox" prefWidth="200.0" promptText="Select depth">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" top="20.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="function_combobox" prefWidth="200.0" promptText="Select function">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" top="10.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <Text fx:id="game_mode_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Human vs Human" visible="false">
+                  <Text fx:id="game_mode_text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Red player parameters:">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" left="20.0" top="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </Text>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <ComboBox fx:id="algorithm1_combobox" prefWidth="200.0" promptText="Select algorithm">
+                     <VBox.margin>
+                        <Insets left="20.0" top="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="depth1_combobox" prefWidth="200.0" promptText="Select depth">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" top="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="function1_combobox" prefWidth="200.0" promptText="Select function">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Text fx:id="game_mode_text11" strokeType="OUTSIDE" strokeWidth="0.0" text="Yellow player parameters:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <ComboBox fx:id="algorithm2_combobox" prefWidth="200.0" promptText="Select algorithm">
+                     <VBox.margin>
+                        <Insets left="20.0" top="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="depth2_combobox" prefWidth="200.0" promptText="Select depth">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" top="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="function2_combobox" prefWidth="200.0" promptText="Select function">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <HBox prefHeight="70.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="start_button" cancelButton="true" mnemonicParsing="false" text="Start" textFill="#8c1c1c">
                            <font>
@@ -133,20 +161,20 @@
                         <DropShadow />
                      </effect>
                   </HBox>
-                  <Text fx:id="win_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Wygrał" visible="false">
+                  <Text fx:id="win_text" fill="#1608a3" strokeType="OUTSIDE" strokeWidth="0.0" text="Win" visible="false">
                      <font>
                         <Font size="22.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="40.0" />
                      </VBox.margin>
                   </Text>
-                  <Text fx:id="error_text" fill="#e50000" strokeType="OUTSIDE" strokeWidth="0.0" text="Błąd" visible="false">
+                  <Text fx:id="error_text" fill="#e50000" strokeType="OUTSIDE" strokeWidth="0.0" text="Error" visible="false">
                      <font>
                         <Font size="22.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="30.0" />
                      </VBox.margin>
                   </Text>
                </children>

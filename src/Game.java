@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -6,10 +7,12 @@ public class Game {
     private char lastPlayer;
     private boolean firstMove = true;
     private int nextMoveLocation = 3;
+    private boolean alfabeta = false;
     private int MODE;
     private int depth;
     private Scanner scanner;
     int turn = 0;   //turn 1 -> o; turn 2 -> x
+    int minmaxCount = 0;
 
     public Game(int mode){
         this.board = new Board();
@@ -19,12 +22,13 @@ public class Game {
         start();
     }
 
-    public Game(int mode, int depth, IEvaluationFunction function){
+    public Game(int mode, int depth, IEvaluationFunction function, boolean alfabeta){
         this.function = function;
         this.board = new Board();
         this.lastPlayer = 'x';
         this.MODE = mode;
         this.depth = depth;
+        this.alfabeta = alfabeta;
         scanner = new Scanner(System.in);
         start();
     }
@@ -112,11 +116,21 @@ public class Game {
         char player = lastPlayer;
         Board board = new Board(this.board);
 
-        if(firstMove)
+        if(firstMove) {
             firstMove = false;
-        else
-            minimax(0, true, player, board);
+            Random random = new Random();
+            nextMoveLocation = random.nextInt(7);
+        }
+        else {
+            long start = System.currentTimeMillis();
+            minimax(0, true, player, board, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            long stop = System.currentTimeMillis();
+            long time = stop - start;
+            System.out.println("Time: " + time);
+            System.out.println("Count: " + minmaxCount);
+            minmaxCount = 0;
 
+        }
         System.out.println("Next AI move: " + nextMoveLocation);
         makeMove(nextMoveLocation, lastPlayer, this.board);
     }
@@ -131,8 +145,9 @@ public class Game {
         return true;
     }
 
-    public int minimax(int level, boolean isMax, char player, Board board) {
+    public int minimax(int level, boolean isMax, char player, Board board, int alfa, int beta) {
 //        board.displayBoard();
+        minmaxCount++;
 
         if(level == depth || !board.isEmptyField() || board.checkIfWin(player, board)
                 || board.checkIfWin(getOtherPlayer(player), board)){
@@ -147,9 +162,7 @@ public class Game {
             for (int i = 0; i < Board.BOARD_COLUMNS; i++) {
                 Board temp = new Board(board);
                 if (makeMove(i, player, temp)) {
-                    value = minimax(level + 1, false, getOtherPlayer(player), temp);
-//                    if(value >= maxScore)
-//                        nextMoveLocation = i;
+                    value = minimax(level + 1, false, getOtherPlayer(player), temp, alfa, beta);
                 }
                 if(level == 0 && board.firstEmptyInCol(i) != -1){
                     if(value >= maxScore) {
@@ -158,6 +171,12 @@ public class Game {
 //                    System.out.println("Score for location "+i+" = "+value);
                 }
                 maxScore = Math.max(value, maxScore);
+                if(alfabeta) {
+                    alfa = Math.max(value, alfa);
+                    if (beta <= alfa) {
+                        break;
+                    }
+                }
             }
 //                System.out.println("Max value: " + maxScore);
             return maxScore;
@@ -169,9 +188,15 @@ public class Game {
             for (int i = 0; i < Board.BOARD_COLUMNS; i++) {
                 Board temp = new Board(board);
                 if (makeMove(i, player, temp)) {
-                    value = minimax(level + 1, true, getOtherPlayer(player), temp);
+                    value = minimax(level + 1, true, getOtherPlayer(player), temp, alfa, beta);
                 }
                 minScore = Math.min(value, minScore);
+                if(alfabeta) {
+                    beta = Math.min(value, beta);
+                    if (beta <= alfa) {
+                        break;
+                    }
+                }
             }
 //                System.out.println("Min value: " + minScore);
             return minScore;
