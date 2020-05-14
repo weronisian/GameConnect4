@@ -54,14 +54,16 @@ public class Results {
         }
     }
 
-    public void writeDepthAndMovesToWin(boolean alfabeta1, boolean alfabeta2, int depth1, int depth2, long timeToWin,
-                                        int movesToWin, int win) {
+    public void writeDepthAndMovesToWin(boolean alfabeta1, boolean alfabeta2, String function1, String function2, int depth1, int depth2,
+                                        long timeToWin, int movesToWin, int win) {
         File plik = new File("ResultsDepthAndMovesToWin.csv");
         try {
             BufferedWriter record = new BufferedWriter(new FileWriter(plik, true));
 
             record.write(Boolean.toString(alfabeta1));
             record.write(";" + Boolean.toString(alfabeta2));
+            record.write(";" + function1);
+            record.write(";" + function2);
             record.write(";" + Integer.toString(depth1));
             record.write(";" + Integer.toString(depth2));
             record.write(";" + Long.toString(timeToWin));

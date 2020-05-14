@@ -70,47 +70,13 @@ public class GameController {
             depth2_combobox.getItems().add(i);
         }
         function1_combobox.getItems().add("Function win-lose");
-        function2_combobox.getItems().add("Function win-lose");
+        function1_combobox.getItems().add("Function 3 next to each other");
+        function1_combobox.getItems().add("Function empty spaces in column");
 
-//        if(mode == 1) {
-//            depth2_combobox.setOnAction(e -> {
-//                if (getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//            function2_combobox.setOnAction(e -> {
-//                if (getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//        }
-//        if(mode == 2) {
-//            depth1_combobox.setOnAction(e -> {
-//                if (getDepth1_combobox().getValue() != null && getFunction1_combobox().getValue() != null &&
-//                        getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//            function1_combobox.setOnAction(e -> {
-//                if (getDepth1_combobox().getValue() != null && getFunction1_combobox().getValue() != null &&
-//                        getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//
-//            depth2_combobox.setOnAction(e -> {
-//                if (getDepth1_combobox().getValue() != null && getFunction1_combobox().getValue() != null &&
-//                        getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//            function2_combobox.setOnAction(e -> {
-//                if (getDepth1_combobox().getValue() != null && getFunction1_combobox().getValue() != null &&
-//                        getDepth2_combobox().getValue() != null && getFunction2_combobox().getValue() != null
-//                        && getAlgorithm_combobox().getValue() != null)
-//                    start_button.setDisable(false);
-//            });
-//        }
+        function2_combobox.getItems().add("Function win-lose");
+        function2_combobox.getItems().add("Function 3 next to each other");
+        function2_combobox.getItems().add("Function empty spaces in column");
+
     }
 
     public void start(){
@@ -285,21 +251,27 @@ public class GameController {
                 Board temp = new Board(board);
                 if (makeMove(i, player, temp)) {
                     value = minimax(level + 1, false, getOtherPlayer(player), temp, depth, alpha, beta);
-                    maxScore = Math.max(value, maxScore);
-
-                    if((turn == 1 && alfabeta1) || (turn == 2 && alfabeta2)) {
-                        alpha = Math.max(maxScore, alpha);
-                        if (beta <= alpha) {
-                            break;
-                        }
-                    }
                 }
                 if(level == 0 && board.firstEmptyInCol(i) != -1){
-                    if(value >= maxScore) {
+                    if(value > maxScore) {
                         nextMoveLocation = i;
                     }
+                    else if(value == maxScore) {
+                        Random random = new Random();
+                        boolean rand = random.nextBoolean();
+                        if(rand)
+                            nextMoveLocation = i;
+                    }
+//                    System.out.println("Score for location "+i+" = "+value);
                 }
+                maxScore = Math.max(value, maxScore);
 
+                if((turn == 1 && alfabeta1) || (turn == 2 && alfabeta2)) {
+                    alpha = Math.max(maxScore, alpha);
+                    if (beta <= alpha) {
+                        break;
+                    }
+                }
             }
             return maxScore;
         } else {
@@ -325,18 +297,21 @@ public class GameController {
     }
 
     private void gameOver() {
-        new Results().writeAvgTime(depth1, time1, moves1);
+        if(mode == 2)
+            new Results().writeAvgTime(depth1, time1, moves1);
 
         if(turn == 1) {
             GUI.redScores++;
             scores_red_text.setText(String.valueOf(GUI.redScores));
             win_text.setText("Red Wins!");
-            new Results().writeDepthAndMovesToWin(alfabeta1, alfabeta2, depth1, depth2, time1, moves1, 1);
+            new Results().writeDepthAndMovesToWin(alfabeta1, alfabeta2, function1.toString(), function2.toString(),
+                    depth1, depth2, time1, moves1, 1);
         } else {
             GUI.yellowScores++;
             scores_yellow_text.setText(String.valueOf(GUI.yellowScores));
             win_text.setText("Yellow Wins!");
-            new Results().writeDepthAndMovesToWin(alfabeta1, alfabeta2, depth1, depth2, time2, moves2, 2);
+            new Results().writeDepthAndMovesToWin(alfabeta1, alfabeta2, function1.toString(), function2.toString(),
+                    depth1, depth2, time2, moves2, 2);
         }
 
         win_text.setVisible(true);

@@ -12,7 +12,8 @@ public class GUI extends Application {
     public static int yellowScores = 0;
 
     private boolean tests = true;
-    private int repeat = 9;
+    private boolean setDepth = false;
+    private int repeat = 1;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -63,73 +64,6 @@ public class GUI extends Application {
             controller.getStart_button().setDisable(false);
         });
 
-//        controller.getAlgorithm_combobox().setOnAction(e-> {
-//            if(controller.getMode() == 1) {
-//                if (controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                        && controller.getAlgorithm_combobox().getValue() != null)
-//                    controller.getStart_button().setDisable(false);
-//            }
-//            if(controller.getMode() == 2){
-//
-//            }
-//        });
-
-////        if(controller.getMode() == 1) {
-//            controller.getDepth2_combobox().setOnAction(e -> {
-//                if(controller.getMode() == 1) {
-//                    if (controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                            && controller.getAlgorithm_combobox().getValue() != null)
-//                        controller.getStart_button().setDisable(false);
-//                }
-//                if(controller.getMode() == 2){
-//                    if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                            controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                            && controller.getAlgorithm_combobox().getValue() != null)
-//                        controller.getStart_button().setDisable(false);
-//                }
-//            });
-//            controller.getFunction2_combobox().setOnAction(e -> {
-//                if(controller.getMode() == 1) {
-//                    if (controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                            && controller.getAlgorithm_combobox().getValue() != null)
-//                        controller.getStart_button().setDisable(false);
-//                }
-//                if(controller.getMode() == 2) {
-//                    if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                            controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                            && controller.getAlgorithm_combobox().getValue() != null)
-//                        controller.getStart_button().setDisable(false);
-//                }
-//            });
-//        }
-//        if(controller.getMode() == 2) {
-//            controller.getDepth1_combobox().setOnAction(e -> {
-//                if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                        controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                        && controller.getAlgorithm_combobox().getValue() != null)
-//                    controller.getStart_button().setDisable(false);
-//            });
-//            controller.getFunction1_combobox().setOnAction(e -> {
-//                if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                        controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                        && controller.getAlgorithm_combobox().getValue() != null)
-//                    controller.getStart_button().setDisable(false);
-//            });
-//
-//            controller.getDepth2_combobox().setOnAction(e -> {
-//                if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                        controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                        && controller.getAlgorithm_combobox().getValue() != null)
-//                    controller.getStart_button().setDisable(false);
-//            });
-//            controller.getFunction2_combobox().setOnAction(e -> {
-//                if (controller.getDepth1_combobox().getValue() != null && controller.getFunction1_combobox().getValue() != null &&
-//                        controller.getDepth2_combobox().getValue() != null && controller.getFunction2_combobox().getValue() != null
-//                        && controller.getAlgorithm_combobox().getValue() != null)
-//                    controller.getStart_button().setDisable(false);
-//            });
-//        }
-
         controller.getStart_button().setOnAction(e -> {
             controller.setIsRestart(false);
 
@@ -173,25 +107,31 @@ public class GUI extends Application {
                 String option = (String) controller.getFunction1_combobox().getValue();
                 if(option.equals("Function win-lose"))
                     controller.setFunction1(new EvaluationFunctionWinLose());
-                else if(option.equals("alfa-beta"))
-                    controller.setFunction1(new EvaluationFunctionWinLose());
+                else if(option.equals("Function 3 next to each other"))
+                    controller.setFunction1(new EvaluationFunctionThree());
+                else if(option.equals("Function empty spaces in column"))
+                    controller.setFunction1(new EvaulationFunctionEmptySpaces());
             }
 
             if(controller.getFunction2_combobox().getValue() != null) {
                 String option = (String) controller.getFunction2_combobox().getValue();
                 if(option.equals("Function win-lose"))
                     controller.setFunction2(new EvaluationFunctionWinLose());
-                else if(option.equals("alfa-beta"))
-                    controller.setFunction2(new EvaluationFunctionWinLose());
+                else if(option.equals("Function 3 next to each other"))
+                    controller.setFunction2(new EvaluationFunctionThree());
+                else if(option.equals("Function empty spaces in column"))
+                    controller.setFunction2(new EvaulationFunctionEmptySpaces());
             }
 
             new Results().writeAllParameters(controller.getDepth1(), controller.getDepth2(),
                     controller.getAlgorithm1(), controller.getAlgorithm2());
 
             if(tests) {
-                controller.setDepth1(controller.getDepth1() - controller.n + 1);
-                if(controller.getDepth1() <= 0)
-                    controller.setDepth1(1);
+                if(setDepth) {
+                    controller.setDepth1(controller.getDepth1() - controller.n + 1);
+                    if (controller.getDepth1() <= 0)
+                        controller.setDepth1(1);
+                }
                 controller.n --;
             }
 

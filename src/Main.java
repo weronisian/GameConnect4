@@ -6,7 +6,9 @@ public class Main {
 
 //        new Game(0);
 //        new Game(1, depth, new EvaluationFunctionWinLose(), true);
-        new Game(2, depth, new EvaluationFunctionWinLose(), true);
+//        new Game(2, depth, new EvaluationFunctionWinLose(), true);
+
+        new Game(1, depth, new EvaulationFunctionEmptySpaces(), false);
 
 //        new GUI().main(null);
 

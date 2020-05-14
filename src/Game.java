@@ -165,8 +165,14 @@ public class Game {
                     value = minimax(level + 1, false, getOtherPlayer(player), temp, alfa, beta);
                 }
                 if(level == 0 && board.firstEmptyInCol(i) != -1){
-                    if(value >= maxScore) {
+                    if(value > maxScore) {
                         nextMoveLocation = i;
+                    }
+                    else if(value == maxScore) {
+                        Random random = new Random();
+                        boolean rand = random.nextBoolean();
+                        if(rand)
+                            nextMoveLocation = i;
                     }
 //                    System.out.println("Score for location "+i+" = "+value);
                 }
